@@ -52,6 +52,13 @@ export class DefaultCookieService implements CookieService {
 
   constructor(document: any) {
     this.document = document;
+    this.check = this.check.bind(this);
+    this.get = this.get.bind(this);
+    this.getAll = this.getAll.bind(this);
+    this.set = this.set.bind(this);
+    this.delete = this.delete.bind(this);
+    this.deleteAll = this.deleteAll.bind(this);
+    this.getCookieRegExp = this.getCookieRegExp.bind(this);
   }
 
   /**
