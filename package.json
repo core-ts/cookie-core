@@ -1,6 +1,6 @@
 {
   "name": "cookie-core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "cookie",
   "main": "./lib/index.js",
   "types": "./src/index.ts",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com/common-ts/cookie-core"
+    "url": "git@github.com/core-ts/cookie-core"
   },
   "keywords": [
     "cookie",

@@ -1,3 +1,6 @@
+export interface StringMap {
+  [key: string]: string;
+}
 export interface CookieService {
   /**
    * @param name Cookie name
@@ -9,12 +12,12 @@ export interface CookieService {
    * @param name Cookie name
    * @returns {any}
    */
-  get(name: string): string;
+  get(name: string): string|undefined;
 
   /**
    * @returns {}
    */
-  getAll(): {};
+  getAll(): StringMap;
 
   /**
    * @param name  Cookie name
@@ -79,12 +82,16 @@ export class DefaultCookieService implements CookieService {
    * @param name Cookie name
    * @returns {any}
    */
-  get(name: string): string {
+  get(name: string): string|undefined {
     if (this.documentIsAccessible && this.check(name)) {
       name = encodeURIComponent(name);
       const regExp = this.getCookieRegExp(name);
       const result = regExp.exec(this.document.cookie);
-      return decodeURIComponent(result[1]);
+      if (!result) {
+        return undefined;
+      } else {
+        return decodeURIComponent(result[1]);
+      }
     } else {
       return '';
     }
@@ -93,11 +100,11 @@ export class DefaultCookieService implements CookieService {
   /**
    * @returns {}
    */
-  getAll(): any {
+  getAll(): StringMap {
     if (!this.documentIsAccessible) {
       return {};
     }
-    const cookies = {};
+    const cookies: StringMap = {};
     const document = this.document;
     if (document.cookie && document.cookie !== '') {
       const split = document.cookie.split(';');
