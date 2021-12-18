@@ -1,7 +1,7 @@
 export interface StringMap {
   [key: string]: string;
 }
-export interface CookieService {
+export interface Cookie {
   /**
    * @param name Cookie name
    * @returns {boolean}
@@ -12,7 +12,7 @@ export interface CookieService {
    * @param name Cookie name
    * @returns {any}
    */
-  get(name: string): string|undefined;
+  get(name: string): string;
 
   /**
    * @returns {}
@@ -49,7 +49,7 @@ export interface CookieService {
   getCookieRegExp?(name: string): RegExp;
 }
 
-export class DefaultCookieService implements CookieService {
+export class CookieService implements Cookie {
   private document: any;
   private documentIsAccessible = true;
 
@@ -82,13 +82,13 @@ export class DefaultCookieService implements CookieService {
    * @param name Cookie name
    * @returns {any}
    */
-  get(name: string): string|undefined {
+  get(name: string): string {
     if (this.documentIsAccessible && this.check(name)) {
       name = encodeURIComponent(name);
       const regExp = this.getCookieRegExp(name);
       const result = regExp.exec(this.document.cookie);
-      if (!result) {
-        return undefined;
+      if (!result || result.length === 0) {
+        return '';
       } else {
         return decodeURIComponent(result[1]);
       }
